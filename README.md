@@ -120,6 +120,17 @@ Interactive API docs are at http://localhost:8000/api/docs/.
 
 While `DEBUG` is true, the API allows any browser origin. For a deployed API, set `CORS_ALLOWED_ORIGINS` to the frontend origin and set `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=false`, and `DJANGO_ALLOWED_HOSTS`.
 
+## Deploy
+
+The API and the app live in this one repository. On Vercel, set the project **Root Directory** to `frontend`. On Railway, set the service root to `backend` and start it with `gunicorn ena_spotter.wsgi:application`.
+
+Vercel environment variables:
+
+- `GOOGLE_MAPS_API_KEY` — Places API (New) key
+- `NEXT_PUBLIC_API_URL` — the Railway API origin, with no trailing slash
+
+`NEXT_PUBLIC_API_URL` is read when the frontend is built, so change it and redeploy. On Railway, set `DJANGO_ALLOWED_HOSTS` to the Railway hostname and `CORS_ALLOWED_ORIGINS` to the Vercel origin, for example `https://your-app.vercel.app`.
+
 ## Tests
 
 From `backend`, with the virtual environment active:
