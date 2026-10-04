@@ -73,6 +73,10 @@ export async function buildTrip(
     steps: formatInstructions(routed.legs ?? []),
   };
 
+  // this  is giving this
+  // https://roadwise-production.up.railway.app//api/plan/
+ // how  do i resolve this on deployment?
+
   const res = await fetch(`${API_URL}/api/plan/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

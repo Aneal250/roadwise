@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf";
 import { DUTY_ROWS } from "./constants";
 import { cityName, fmtHours, formatClockMinutes, formatLogDate } from "./format";
-import type { DailyLog, DutyEvent, MapStop, RouteGeo, TripForm, TripPlan } from "./types";
+import type { DailyLog, DutyEvent, MapStop, TripForm, TripPlan } from "./types";
 
 const PAGE_W = 215.9;
 const PAGE_H = 279.4;
@@ -21,7 +21,6 @@ const DUTY_COLORS: Record<DutyEvent["status"], [number, number, number]> = {
 type ReportInput = {
   form: TripForm;
   plan: TripPlan;
-  route: RouteGeo;
   miles: number;
   hours: number;
   fuelStops: number;
@@ -81,18 +80,6 @@ function drawSummary(doc: jsPDF, input: ReportInput) {
       y += 5;
     });
   }
-
-  y = sectionTitle(doc, y + 2, "Turn-by-turn");
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(...INK);
-  input.route.steps.forEach((step, index) => {
-    const text = `${index + 1}. ${step.text}  ${step.miles.toFixed(1)} mi`;
-    const lines = doc.splitTextToSize(text, PAGE_W - MARGIN * 2);
-    y = ensureSpace(doc, y, lines.length * 4 + 1);
-    doc.text(lines, MARGIN, y);
-    y += lines.length * 4 + 1;
-  });
 
   y = ensureSpace(doc, y + 4, 16);
   doc.setFontSize(8);

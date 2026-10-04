@@ -44,7 +44,6 @@ export function TripResults({
       await downloadTripReport({
         form,
         plan,
-        route,
         miles,
         hours,
         fuelStops,
